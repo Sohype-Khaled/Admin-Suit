@@ -1,0 +1,14 @@
+<?php
+
+namespace DummyNamespace;
+
+use Codtail\AdminSuit\Support\Filters\FilterAbstract;
+
+class DummyClass extends FilterAbstract
+{
+    protected function apply($builder)
+    {
+        // TODO apply filter here
+        return $builder;
+    }
+}

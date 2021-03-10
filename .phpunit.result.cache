@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":240:{a:2:{s:7:"defects";a:1:{s:84:"Codtail\AdminSuit\Tests\Feature\FilterMakeCommandTest::it_creates_a_new_filter_class";i:3;}s:5:"times";a:1:{s:84:"Codtail\AdminSuit\Tests\Feature\FilterMakeCommandTest::it_creates_a_new_filter_class";d:0.178;}}}

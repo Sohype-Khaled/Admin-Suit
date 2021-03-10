@@ -1,0 +1,32 @@
+{
+    "name": "codtail/admin-suit",
+    "description": "Laravel Admin Panel",
+    "type": "library",
+    "require": {
+        "laravel/scout": "^8.6"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.13",
+        "phpunit/phpunit": "^9.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sohype-Khaled",
+            "email": "sohype.mop@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Codtail\\AdminSuit\\AdminSuitServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+          "Codtail\\AdminSuit\\": "src",
+          "Codtail\\AdminSuit\\Tests\\": "tests"
+        }
+      }
+}
