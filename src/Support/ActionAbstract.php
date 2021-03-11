@@ -20,7 +20,4 @@ abstract class ActionAbstract
         $this->text = $text;
         return $this;
     }
-
-
-    abstract public function resolveModelAction($model);
 }

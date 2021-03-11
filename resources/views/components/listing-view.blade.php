@@ -21,6 +21,12 @@
             </div>
         </div>
         <div class="search-wrapper">
+            <lv-actions 
+                :actions="bulkActions"
+                :selected="selected"
+                :all-selected="allSelected"/>
+            
+
             <div class="d-flex">
                 <button type="button" class="btn btn-outline-info btn-sm">
                     <i class="fa fa-th"></i>
@@ -29,7 +35,6 @@
                     <i class="fa fa-list"></i>
                 </button>
             </div>
-
         </div>
     </div>
 

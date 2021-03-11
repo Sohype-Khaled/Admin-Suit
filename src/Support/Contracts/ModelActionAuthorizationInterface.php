@@ -13,4 +13,6 @@ interface ModelActionAuthorizationInterface
     public function showIf(\Closure $callback);
 
     public function checkCanShow($model): bool;
+
+    public function resolveModelAction($model);
 }

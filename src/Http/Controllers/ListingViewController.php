@@ -46,20 +46,9 @@ class ListingViewController extends Controller
         return response()->json([
             'meta' => $this->getMeta($data->toArray()),
             'items' => $data->items(),
-            'items_actions' => $this->getItemActions($data->items())
+            'items_actions' => $this->getItemActions($data->items()),
+            'bulk_actions' => $this->getBulkActions($model)
         ]);
-    }
-
-    public function getItemActions($items)
-    {
-        $actions = [];
-        foreach ($items as $item) {
-            foreach ($this->list_view->getActions() as $action) {
-                if ($action_data = $action->resolveModelAction($item))
-                    $actions[$item->id][] = $action_data;
-            }
-        }
-        return $actions;
     }
 
     public function getRelationships()
@@ -84,5 +73,30 @@ class ListingViewController extends Controller
             'total' => $paginator['total'],
             'per_page' => $paginator['per_page']
         ];
+    }
+
+    public function getItemActions($items)
+    {
+        $actions = [];
+        foreach ($items as $item) {
+            foreach ($this->list_view->getActions() as $action) {
+                if ($action_data = $action->resolveModelAction($item))
+                    $actions[$item->id][] = $action_data;
+            }
+        }
+        return $actions;
+    }
+
+    public function getBulkActions($model)
+    {
+        $actions = [];
+        foreach ($this->list_view->getActions() as $action) {
+            $action_refliction = new \ReflectionClass(get_class($action));
+            if ($action_refliction->hasMethod('resolveBulkActions')
+                && $action_data = $action->resolveBulkActions($model))
+                $actions[] = $action_data;
+        }
+
+        return $actions;
     }
 }

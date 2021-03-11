@@ -4,13 +4,14 @@ namespace Codtail\AdminSuit\Support;
 
 use Codtail\AdminSuit\Support\ActionAbstract;
 use Codtail\AdminSuit\Support\Contracts\ApplyActionInterface;
+use Codtail\AdminSuit\Support\Contracts\BulkActionsAuthorizationInterface;
 use Codtail\AdminSuit\Support\Contracts\ModelActionAuthorizationInterface;
 use Illuminate\Database\Eloquent\Model;
 use Codtail\AdminSuit\Support\Traits\ApplyAction;
 
 
 abstract class DefaultActionAbstract extends ActionAbstract implements ModelActionAuthorizationInterface,
-ApplyActionInterface
+ApplyActionInterface, BulkActionsAuthorizationInterface
 {
 
     use ApplyAction;
@@ -58,6 +59,21 @@ ApplyActionInterface
         ];
     }
 
+    public function resolveBulkActions($model)
+    {
+        if (!$this->bulkAuthorize()) return false;
+
+        return [
+            'danger' => $this->danger,
+            'text' => $this->text,
+            'message_title' => $this->message_title,
+            'message_body' => $this->message_body,
+            'action_model' => $model,
+            'action_class' => get_class($this),
+            'type' => 'action'
+        ];
+    }
+
     // public static function renderBulk($action, $model): string
     // {
     //     if (self::bulkAuthorize($action)) return "";
@@ -82,9 +98,9 @@ ApplyActionInterface
         return $this->authorization_callback && call_user_func($this->authorization_callback, $model);
     }
 
-    public  function bulkAuthorize($action): bool
+    public  function bulkAuthorize(): bool
     {
-        return $this->bulk_authorization_callback && !call_user_func($this->bulk_authorization_callback);
+        return $this->bulk_authorization_callback && call_user_func($this->bulk_authorization_callback);
     }
 
     public function showIf(\Closure $callback)
