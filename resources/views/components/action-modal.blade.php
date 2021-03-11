@@ -6,7 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
             </div>
            
-            <x-admin.form action="{{ route('admin.support.apply-action') }}" method="post">
+            <x-admin.form action="{{ route('admin-suit.call-action') }}" method="post">
                 <input type="hidden" name="action_model" id="admin-suit-action-modal_model">
                 <input type="hidden" name="action" id="admin-suit-action-modal_action">
                 <input type="hidden" name="action_items" id="admin-suit-action-modal_items">

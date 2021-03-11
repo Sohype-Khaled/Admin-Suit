@@ -21,9 +21,6 @@
             </div>
         </div>
         <div class="search-wrapper">
-
-            <div class="d-flex justify-content-between ">
-                           </div>
             <div class="d-flex">
                 <button type="button" class="btn btn-outline-info btn-sm">
                     <i class="fa fa-th"></i>

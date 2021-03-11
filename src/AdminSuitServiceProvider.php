@@ -57,6 +57,7 @@ class AdminSuitServiceProvider extends ServiceProvider
 		return [
 			'prefix' => config('admin-suit.prefix'),
 			'middleware' => config('admin-suit.middleware'),
+			'as' => config('admin-suit.route_name'),
 		];
 	}
 }

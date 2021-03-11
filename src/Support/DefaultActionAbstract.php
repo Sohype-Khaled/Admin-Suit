@@ -1,22 +1,20 @@
 <?php
 
-
 namespace Codtail\AdminSuit\Support;
 
-
 use Codtail\AdminSuit\Support\ActionAbstract;
+use Codtail\AdminSuit\Support\Contracts\ApplyActionInterface;
 use Codtail\AdminSuit\Support\Contracts\ModelActionAuthorizationInterface;
 use Illuminate\Database\Eloquent\Model;
+use Codtail\AdminSuit\Support\Traits\ApplyAction;
 
-/*
-implements
-    RenderActionInterface,
-    BulkRenderActionInterface,
-    ApplyActionInterface
-    */
 
-abstract class DefaultActionAbstract extends ActionAbstract implements ModelActionAuthorizationInterface
+abstract class DefaultActionAbstract extends ActionAbstract implements ModelActionAuthorizationInterface,
+ApplyActionInterface
 {
+
+    use ApplyAction;
+
     public $danger = false;
 
     public $renderIf;
@@ -36,15 +34,16 @@ abstract class DefaultActionAbstract extends ActionAbstract implements ModelActi
         $this->setBulkAuthorization();
     }
 
+    abstract public function rules(): array;
+
     abstract public function setAuthorization();
 
     abstract public function setBulkAuthorization();
 
-    abstract public static function apply(Model $model, $ids, $value = null);
+    abstract public function apply();
 
     public function resolveModelAction($model)
     {
-
         if (!$this->authorize($model) || !$this->checkCanShow($model)) return false;
 
         return [

@@ -10,6 +10,8 @@ return [
 
     'prefix' => 'admin-suit',
 
+    'route_name' => 'admin-suit.',
+
     'middleware' => ['web', 'auth'],
 
 ];
