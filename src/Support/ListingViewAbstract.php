@@ -7,6 +7,7 @@ namespace Codtail\AdminSuit\Support;
 use Codtail\AdminSuit\Support\Filters\DynamicFilter;
 use Codtail\AdminSuit\Support\Filters\QFilter;
 use Codtail\AdminSuit\Support\Filters\RelationshipFilter;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class ListingViewAbstract
 {
@@ -73,5 +74,15 @@ abstract class ListingViewAbstract
     public function getActions()
     {
         return $this->actions;
+    }
+
+    public function getModelActions(Model $model)
+    {
+        $actions = [];
+        foreach ($this->getActions() as $action) {
+            if ($action_data = $action->resolveModelAction($model))
+                $actions[$action->text] = $action_data;
+        }
+        return collect($actions);
     }
 }

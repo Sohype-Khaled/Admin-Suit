@@ -32,9 +32,7 @@ class ListingViewController extends Controller
             ->through($this->list_view->getFilters())
             ->thenReturn();
 
-
         $data = $data->with(($this->getRelationships()));
-
 
         if ($this->list_view->pagination)
             $data = $data->paginate($per_page)
@@ -51,7 +49,7 @@ class ListingViewController extends Controller
         ]);
     }
 
-    public function getRelationships()
+    private function getRelationships()
     {
         $relationships = [];
 
@@ -75,7 +73,7 @@ class ListingViewController extends Controller
         ];
     }
 
-    public function getItemActions($items)
+    private function getItemActions($items)
     {
         $actions = [];
         foreach ($items as $item) {
@@ -87,7 +85,7 @@ class ListingViewController extends Controller
         return $actions;
     }
 
-    public function getBulkActions($model)
+    private function getBulkActions($model)
     {
         $actions = [];
         foreach ($this->list_view->getActions() as $action) {

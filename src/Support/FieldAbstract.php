@@ -15,11 +15,17 @@ abstract class FieldAbstract
 
     public $title;
 
+    public $placeholder;
+
+    public $value;
+
     public $sortable = false;
 
     public $related_column;
 
     public $withLink = false;
+
+    public $required = false;
 
     public $link;
 
@@ -32,6 +38,8 @@ abstract class FieldAbstract
         $this->operators = $this->setOperators();
     }
 
+    abstract public function setOperators();
+
     public static function make($title, $column_name = '')
     {
         $column_name = Str::snake($column_name ? $column_name : $title);
@@ -40,8 +48,6 @@ abstract class FieldAbstract
             ->setTitle($title)
             ->setName($column_name);
     }
-
-    abstract public function setOperators();
 
     public function setName($name)
     {
@@ -61,6 +67,12 @@ abstract class FieldAbstract
         return $this;
     }
 
+    public function required()
+    {
+        $this->required = true;
+        return $this;
+    }
+
     public function link($to = '')
     {
         $this->withLink = true;
@@ -71,6 +83,12 @@ abstract class FieldAbstract
     public function setArgumentComponent(array $component)
     {
         $this->argument_component = $component;
+        return $this;
+    }
+
+    public function setValue($value)
+    {
+        $this->value = $value;
         return $this;
     }
 }

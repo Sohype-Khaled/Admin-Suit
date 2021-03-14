@@ -2,16 +2,14 @@
 
 namespace Codtail\AdminSuit\Support;
 
-use Codtail\AdminSuit\Support\ActionAbstract;
 use Codtail\AdminSuit\Support\Contracts\ApplyActionInterface;
 use Codtail\AdminSuit\Support\Contracts\BulkActionsAuthorizationInterface;
 use Codtail\AdminSuit\Support\Contracts\ModelActionAuthorizationInterface;
-use Illuminate\Database\Eloquent\Model;
 use Codtail\AdminSuit\Support\Traits\ApplyAction;
 
 
 abstract class DefaultActionAbstract extends ActionAbstract implements ModelActionAuthorizationInterface,
-ApplyActionInterface, BulkActionsAuthorizationInterface
+    ApplyActionInterface, BulkActionsAuthorizationInterface
 {
 
     use ApplyAction;
@@ -33,13 +31,17 @@ ApplyActionInterface, BulkActionsAuthorizationInterface
         $this->setAuthorization();
 
         $this->setBulkAuthorization();
-    }
 
-    abstract public function rules(): array;
+        $this->renderIf = function () {
+            return true;
+        };
+    }
 
     abstract public function setAuthorization();
 
     abstract public function setBulkAuthorization();
+
+    abstract public function rules(): array;
 
     abstract public function apply();
 
@@ -59,6 +61,16 @@ ApplyActionInterface, BulkActionsAuthorizationInterface
         ];
     }
 
+    public function checkCanShow($model): bool
+    {
+        return $this->renderIf && call_user_func($this->renderIf, $model);
+    }
+
+    public function authorize($model): bool
+    {
+        return $this->authorization_callback && call_user_func($this->authorization_callback, $model);
+    }
+
     public function resolveBulkActions($model)
     {
         if (!$this->bulkAuthorize()) return false;
@@ -74,31 +86,7 @@ ApplyActionInterface, BulkActionsAuthorizationInterface
         ];
     }
 
-    // public static function renderBulk($action, $model): string
-    // {
-    //     if (self::bulkAuthorize($action)) return "";
-    //     return "<button
-    //         disabled
-    //         type=button
-    //         title='{$action['text']}'
-    //         class='{$action['style_classes']} btn-bulk-action'
-    //         data-title='{$action['message_title']}'
-    //         data-message='{$action['message_body']}'
-    //         data-model='{$model}'
-    //         data-action='{$action['class_name']}'
-    //         data-toggle='modal'
-    //         data-target='#action-modal'>
-    //         <i class='{$action['icon']}'></i>
-    //     </button>";
-    // }
-
-
-    public function authorize($model): bool
-    {
-        return $this->authorization_callback && call_user_func($this->authorization_callback, $model);
-    }
-
-    public  function bulkAuthorize(): bool
+    public function bulkAuthorize(): bool
     {
         return $this->bulk_authorization_callback && call_user_func($this->bulk_authorization_callback);
     }
@@ -107,10 +95,5 @@ ApplyActionInterface, BulkActionsAuthorizationInterface
     {
         $this->renderIf = $callback;
         return $this;
-    }
-
-    public function checkCanShow($model): bool
-    {
-        return $this->renderIf && call_user_func($this->renderIf, $model);
     }
 }

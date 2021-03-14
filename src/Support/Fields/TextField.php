@@ -4,15 +4,24 @@
 namespace Codtail\AdminSuit\Support\Fields;
 
 
+use Codtail\AdminSuit\Support\FieldAbstract;
 use Codtail\AdminSuit\Support\Operators\ContainsOperator;
 use Codtail\AdminSuit\Support\Operators\IsEqualToOperator;
 use Codtail\AdminSuit\Support\Operators\IsNotEqualToOperator;
-use Codtail\AdminSuit\Support\FieldAbstract;
 
 class TextField extends FieldAbstract
 {
 
     public $component = 'TextField';
+
+    public $type = 'text';
+
+    public $argument_component = [
+        'component' => 'input',
+        'attrs' => [
+            'type' => 'text',
+        ]
+    ];
 
     public function setOperators()
     {
@@ -22,13 +31,6 @@ class TextField extends FieldAbstract
             new IsNotEqualToOperator,
         ];
     }
-
-    public $argument_component = [
-        'component' => 'input',
-        'attrs' => [
-            'type' => 'text',
-        ]
-    ];
 
 
 }

@@ -75,9 +75,13 @@
     <!-- Admin Suit Scripts -->
     <script src="{!! url('https://unpkg.com/vue@next') !!}"></script>
     <script src="{!! url('https://unpkg.com/axios/dist/axios.min.js') !!}"></script>
+    <script src="{!! url('https://unpkg.com/@vueform/multiselect@1.3.4/dist/multiselect.global.js') !!}"></script>
     <script src="{!! asset('admin-suit/vendors/moment/min/moment.min.js') !!}"></script>
     {{-- <script src="{!! asset('admin-suit/admin-suit/js/listing-view.js') !!}"></script> --}}
+    <script src="{!! asset('admin-suit/admin-suit/js/forms.js') !!}"></script>
+
     <script src="{!! asset('admin-suit/admin-suit/js/actions.js') !!}"></script>
+
     <script src="{!! asset('adminlte/adminkit/js/listing-view.js') !!}"></script>
 
     @stack('js')
