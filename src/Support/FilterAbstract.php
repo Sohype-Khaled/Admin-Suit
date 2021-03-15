@@ -22,6 +22,7 @@ abstract class FilterAbstract
 
     public function getFilterName()
     {
+        return Str::snake(explode('Filter', class_basename($this))[0]);
         return Str::snake(class_basename($this));
     }
 

@@ -12,16 +12,7 @@ use Codtail\AdminSuit\Support\Operators\IsNotEqualToOperator;
 class TextField extends FieldAbstract
 {
 
-    public $component = 'TextField';
 
-    public $type = 'text';
-
-    public $argument_component = [
-        'component' => 'input',
-        'attrs' => [
-            'type' => 'text',
-        ]
-    ];
 
     public function setOperators()
     {

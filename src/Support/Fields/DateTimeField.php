@@ -17,19 +17,14 @@ use Codtail\AdminSuit\Support\FieldAbstract;
 class DateTimeField extends FieldAbstract
 {
 
-    public $component = 'DateTimeField';
+    public $type= 'date';
+    public $format;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->argument_component = [
-            'component' => 'input',
-            'attrs' => [
-                'type' => 'date',
-                'format' =>  config('admin-suit.date_format')
-            ]
-        ];
+        $this->format = config('admin-suit.date_format');
     }
 
     public function setOperators()
@@ -45,5 +40,9 @@ class DateTimeField extends FieldAbstract
         ];
     }
 
-
+    public function setFormat($format)
+    {
+        $this->format = $format;
+        return $this;
+    }
 }

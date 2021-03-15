@@ -18,33 +18,42 @@ abstract class ListingViewAbstract
     public $searchable = false;
 
     public $withActions = true;
-
-    protected $actions = [];
-
     public $scopes = [];
-
     public $scope;
-
     public $filters = [];
-
     public $fields = [];
-
     public $pagination = true;
-
     public $per_page = 10;
-
     public $per_page_options = [5, 10, 20, 50];
-    
+    protected $actions = [];
 
     public function __construct()
     {
         $this->className = static::class;
 
-        $this->setFields();
+        $this->prepareFields();
 
         $this->setScopes();
 
         $this->setActions();
+    }
+
+    public function prepareFields()
+    {
+        $this->fields = array_map(function ($field) {
+            return [
+                'component' => (new \ReflectionClass($field))->getShortName(),
+                'attrs' => $this->getFieldAttrs(clone $field),
+                'operators' => $field->operators
+            ];
+        }, $this->setFields());
+    }
+
+
+    public function getFieldAttrs($field)
+    {
+        unset($field->operators);
+        return $field;
     }
 
     abstract public function setFields();
@@ -53,7 +62,7 @@ abstract class ListingViewAbstract
 
     public function setScope($scope_name)
     {
-        $this->scope = array_filter($this->scopes, function($scope) use ($scope_name) {
+        $this->scope = array_filter($this->scopes, function ($scope) use ($scope_name) {
             return $scope->name == $scope_name;
         });
     }
@@ -69,13 +78,6 @@ abstract class ListingViewAbstract
         ]);
     }
 
-    abstract public function setActions();
-
-    public function getActions()
-    {
-        return $this->actions;
-    }
-
     public function getModelActions(Model $model)
     {
         $actions = [];
@@ -85,4 +87,11 @@ abstract class ListingViewAbstract
         }
         return collect($actions);
     }
+
+    public function getActions()
+    {
+        return $this->actions;
+    }
+
+    abstract public function setActions();
 }

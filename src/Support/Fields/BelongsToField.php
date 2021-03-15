@@ -19,7 +19,6 @@ class BelongsToField extends RelationshipFieldAbstract
     public function setOperators()
     {
         return [
-
             new RelationFieldIsEqualToOperator,
             new IsNotEqualToOperator,
         ];

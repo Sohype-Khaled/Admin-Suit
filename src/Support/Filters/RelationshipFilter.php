@@ -48,6 +48,6 @@ class RelationshipFilter extends FilterAbstract
 
     public function getOperator($name)
     {
-        return "Codtail\\AdminSuit\\Support\\" . Str::camel($name) . "Operator";
+        return "Codtail\\AdminSuit\\Support\\Operators\\" . Str::camel($name) . "Operator";
     }
 }

@@ -9,29 +9,28 @@ use Illuminate\Support\Str;
 abstract class FieldAbstract
 {
 
-    public $component;
-
     public $name;
 
-    public $title;
+    public $label;
 
     public $placeholder;
 
     public $value;
 
+    public $required = false;
+
+    public $type;
+
+
     public $sortable = false;
 
-    public $related_column;
-
     public $withLink = false;
-
-    public $required = false;
 
     public $link;
 
     public $operators = [];
 
-    public $argument_component;
+//    public $argument_component;
 
     public function __construct()
     {
@@ -40,38 +39,46 @@ abstract class FieldAbstract
 
     abstract public function setOperators();
 
-    public static function make($title, $column_name = '')
+    public static function make($label, $name = '')
     {
-        $column_name = Str::snake($column_name ? $column_name : $title);
+        $name = Str::snake($name ? $name : $label);
 
-        return (new static())
-            ->setTitle($title)
-            ->setName($column_name);
+        return (new static())->label($label)->name($name);
     }
 
-    public function setName($name)
+    public function name($name)
     {
         $this->name = $name;
         return $this;
     }
 
-    public function setTitle($title)
+    public function label($label)
     {
-        $this->title = $title;
+        $this->label = $label;
         return $this;
     }
 
-    public function sortable()
-    {
-        $this->sortable = true;
-        return $this;
-    }
 
     public function required()
     {
         $this->required = true;
         return $this;
     }
+
+
+    public function placeholder($placeholder)
+    {
+        $this->placeholder = $placeholder;
+        return $this;
+    }
+
+
+    public function value($value)
+    {
+        $this->value = $value;
+        return $this;
+    }
+
 
     public function link($to = '')
     {
@@ -80,15 +87,16 @@ abstract class FieldAbstract
         return $this;
     }
 
-    public function setArgumentComponent(array $component)
+
+    public function sortable()
     {
-        $this->argument_component = $component;
+        $this->sortable = true;
         return $this;
     }
 
-    public function setValue($value)
+    public function setArgumentComponent(array $component)
     {
-        $this->value = $value;
+        $this->argument_component = $component;
         return $this;
     }
 }

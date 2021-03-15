@@ -15,8 +15,13 @@ use Codtail\AdminSuit\Support\Operators\IsNotEqualToOperator;
 
 class NumberField extends FieldAbstract
 {
+    public $type = 'number';
 
-    public $component = 'NumberField';
+    public $min;
+
+    public $max;
+
+    public $step = 1;
 
     public function setOperators()
     {
@@ -31,10 +36,31 @@ class NumberField extends FieldAbstract
         ];
     }
 
-    public $argument_component = [
-        'component' => 'input',
-        'attrs' => [
-            'type' => 'number',
-        ]
-    ];
+    /**
+     * @param mixed $min
+     */
+    public function setMin($min)
+    {
+        $this->min = $min;
+        return $this;
+    }
+
+    /**
+     * @param mixed $max
+     */
+    public function setMax($max)
+    {
+        $this->max = $max;
+        return $this;
+    }
+
+    /**
+     * @param int $step
+     */
+    public function setStep(int $step)
+    {
+        $this->step = $step;
+        return $this;
+    }
+
 }
