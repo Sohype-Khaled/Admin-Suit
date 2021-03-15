@@ -5,9 +5,11 @@
      data-data='{{ json_encode($fields) }}' @verbatim>
 
     <component
+            v-model="input.attrs.value"
+            v-bind="input.attrs"
             :is="'v' + input.component"
             :key="i"
-            v-for="(input, i)  in fields"
-            v-bind="input.attrs"/>
+            v-for="(input, i)  in fields"/>
+
 </div>
 @endverbatim

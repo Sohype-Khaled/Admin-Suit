@@ -30,7 +30,6 @@ abstract class FieldAbstract
 
     public $operators = [];
 
-//    public $argument_component;
 
     public function __construct()
     {

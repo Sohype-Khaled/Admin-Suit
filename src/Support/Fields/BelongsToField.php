@@ -8,13 +8,12 @@ use Codtail\AdminSuit\Support\Operators\IsEqualToOperator;
 use Codtail\AdminSuit\Support\Operators\IsNotEqualToOperator;
 use Codtail\AdminSuit\Support\Operators\RelationFieldIsEqualToOperator;
 use Codtail\AdminSuit\Support\RelationshipFieldAbstract;
+use Codtail\AdminSuit\Support\FieldAbstract;
 
-class BelongsToField extends RelationshipFieldAbstract
+class BelongsToField extends FieldAbstract
 {
 
-    public $component = 'BelongsToField';
-
-    public $fields = ['id'];
+    public $fields = [];
 
     public function setOperators()
     {
@@ -24,18 +23,8 @@ class BelongsToField extends RelationshipFieldAbstract
         ];
     }
 
-    public function setArgumentAttributes($attrs)
-    {
-        $this->setArgumentComponent([
-            'component' => 'lv-select',
-            'attrs' => array_merge($attrs, [
-                'ajax' => true
-            ])
-        ]);
-        return $this;
-    }
 
-    public function setFields($array)
+    public function fields($array)
     {
         $this->fields = $array;
         return $this;
