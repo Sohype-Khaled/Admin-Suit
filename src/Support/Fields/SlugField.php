@@ -5,24 +5,31 @@ namespace Codtail\AdminSuit\Support\Fields;
 
 
 use Codtail\AdminSuit\Support\FieldAbstract;
-use Codtail\AdminSuit\Support\Operators\InOperator;
+use Codtail\AdminSuit\Support\Operators\ContainsOperator;
 use Codtail\AdminSuit\Support\Operators\IsEqualToOperator;
 use Codtail\AdminSuit\Support\Operators\IsNotEqualToOperator;
 
-class BooleanField extends FieldAbstract
+class SlugField extends FieldAbstract
 {
 
-    public $type = 'checkbox';
 
-    public $class = 'form-check-input';
+    public $target;
+
 
     public function setOperators()
     {
         return [
+            new ContainsOperator,
             new IsEqualToOperator,
             new IsNotEqualToOperator,
         ];
     }
 
+
+    public function target($target)
+    {
+        $this->target = $target;
+        return $this;
+    }
 
 }

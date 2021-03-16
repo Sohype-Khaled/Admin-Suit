@@ -5,24 +5,30 @@ namespace Codtail\AdminSuit\Support\Fields;
 
 
 use Codtail\AdminSuit\Support\FieldAbstract;
-use Codtail\AdminSuit\Support\Operators\InOperator;
+use Codtail\AdminSuit\Support\Operators\ContainsOperator;
 use Codtail\AdminSuit\Support\Operators\IsEqualToOperator;
 use Codtail\AdminSuit\Support\Operators\IsNotEqualToOperator;
 
-class BooleanField extends FieldAbstract
+class FileField extends FieldAbstract
 {
 
-    public $type = 'checkbox';
+    public $type = 'file';
 
-    public $class = 'form-check-input';
+    public $accept;
 
     public function setOperators()
     {
         return [
+            new ContainsOperator,
             new IsEqualToOperator,
             new IsNotEqualToOperator,
         ];
     }
 
+    public function accept(string $types)
+    {
+        $this->accept = $types;
+        return $this;
+    }
 
 }

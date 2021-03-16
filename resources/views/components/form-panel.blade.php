@@ -5,6 +5,7 @@
      data-data='{{ json_encode($fields) }}' @verbatim>
 
     <component
+            :form="localForm"
             v-model="localForm[input.attrs.name]"
             v-bind="input.attrs"
             :is="'v' + input.component"
