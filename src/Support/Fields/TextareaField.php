@@ -13,7 +13,7 @@ class TextareaField extends FieldAbstract
 {
     public $noResize = false;
 
-    public $rows = 20;
+    public $rows = 2;
 
     public $cols = 20;
 

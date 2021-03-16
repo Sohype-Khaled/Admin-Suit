@@ -21,6 +21,7 @@ abstract class FieldAbstract
 
     public $type;
 
+    public $hideLabel = false;
 
     public $sortable = false;
 
@@ -93,9 +94,9 @@ abstract class FieldAbstract
         return $this;
     }
 
-    public function setArgumentComponent(array $component)
+    public function hideLabel()
     {
-        $this->argument_component = $component;
+        $this->hideLabel = true;
         return $this;
     }
 }
