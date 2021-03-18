@@ -46,17 +46,5 @@
                     @update:per-page="updatePerPage"/>
         </template>
     </component>
-    <!--    <lv-table
-                v-model:selected="selected"
-                :with-actions="withActions"
-                :scope="activeScope"
-                :columns="fields"
-                :items="items">
-
-
-            <template v-slot:default="{item, columns, isEven}">
-
-            </template>
-        </lv-table>-->
 </div>
 @endverbatim
