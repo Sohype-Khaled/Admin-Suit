@@ -4,6 +4,7 @@
 namespace Codtail\AdminSuit\Support;
 
 
+use Codtail\AdminSuit\Support\Displays\TableDisplay;
 use Codtail\AdminSuit\Support\Filters\DynamicFilter;
 use Codtail\AdminSuit\Support\Filters\QFilter;
 use Codtail\AdminSuit\Support\Filters\RelationshipFilter;
@@ -18,11 +19,22 @@ abstract class ListingViewAbstract
     public $searchable = false;
 
     public $withActions = true;
+
     public $scopes = [];
+
     public $scope;
+
     public $filters = [];
+
     public $fields = [];
-    public $pagination = true;
+
+    public $displays = [];
+
+    public $display;
+
+    public $default_display = 'TableDisplay';
+
+    public $visible_fields;
     public $per_page = 10;
     public $per_page_options = [5, 10, 20, 50];
     protected $actions = [];
@@ -31,16 +43,21 @@ abstract class ListingViewAbstract
     {
         $this->className = static::class;
 
-        $this->prepareFields();
+        $this->fields = $this->getFields();
 
-        $this->setScopes();
+        $this->scopes = $this->getScopes();
 
-        $this->setActions();
+        $this->displays = $this->getDisplays();
+
+        $this->actions = $this->getActions();
+
+//        if (is_null($this->display))
+//            $this->setDisplay($this->default_display);
     }
 
-    public function prepareFields()
+    public function getFields()
     {
-        $this->fields = array_map(function ($field) {
+        return array_map(function ($field) {
             return [
                 'component' => (new \ReflectionClass($field))->getShortName(),
                 'attrs' => $this->getFieldAttrs(clone $field),
@@ -49,6 +66,7 @@ abstract class ListingViewAbstract
         }, $this->setFields());
     }
 
+    abstract public function setFields();
 
     public function getFieldAttrs($field)
     {
@@ -56,15 +74,49 @@ abstract class ListingViewAbstract
         return $field;
     }
 
-    abstract public function setFields();
+    public function getScopes()
+    {
+        return $this->setScopes();
+    }
 
     abstract public function setScopes();
+
+    public function getDisplays()
+    {
+        return array_map(function ($display) {
+            return [
+                'component' => (new \ReflectionClass($display))->getShortName(),
+                'attrs' => $display,
+            ];
+        }, array_merge([
+            new TableDisplay
+        ], $this->setDisplays()));
+    }
+
+    abstract public function setDisplays();
+
+    public function getActions()
+    {
+        return $this->setActions();
+    }
+
+    abstract public function setActions();
 
     public function setScope($scope_name)
     {
         $this->scope = array_filter($this->scopes, function ($scope) use ($scope_name) {
             return $scope->name == $scope_name;
         });
+    }
+
+    public function getDisplay()
+    {
+        return $this->display;
+    }
+
+    public function setDisplay($display_name)
+    {
+        $this->display =  $this->displays[array_search($display_name, array_column($this->displays, 'component'))];
     }
 
     public function getFilters()
@@ -87,11 +139,4 @@ abstract class ListingViewAbstract
         }
         return collect($actions);
     }
-
-    public function getActions()
-    {
-        return $this->actions;
-    }
-
-    abstract public function setActions();
 }

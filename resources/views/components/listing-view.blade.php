@@ -7,17 +7,14 @@
                 @input:add-filter="addFilter"
                 :scopes="scopes"
                 v-model:scope="scope"
-                :filters="filters"></lv-filters>
+                :filters="filters">
+        </lv-filters>
 
-        <div class="btn-group">
-            <button type="button" class="btn btn-outline-info btn-sm">
-                <i class="fa fa-th"></i>
-            </button>
-            <button type="button" class="btn btn-outline-info btn-sm">
-                <i class="fa fa-list"></i>
-            </button>
-        </div>
-
+        <v-display-buttons
+                :displays="displays"
+                v-model:display="display"
+                @update:display="fetch">
+        </v-display-buttons>
 
         <lv-actions :actions="bulkActions"
                     :selected="selected"
@@ -31,32 +28,35 @@
         </lv-search>
     </div>
 
-
-    <lv-table
+    <component
+            :actions="actions"
+            :is="'v'+display.component"
+            v-bind="display.attrs"
             v-model:selected="selected"
             :with-actions="withActions"
-            :scope="activeScope"
-            :columns="fields"
-            :items="items">
-
-        <template v-slot:pagination>
+            :fields="fields"
+            :visible-fields="visibleFields">
+        <template v-slot:pagination v-if="display.attrs.withPagination">
             <lv-pagination
                     :page="filters['page']"
                     :per-page="filters['per_page']"
                     :per-page-options="perPageOptions"
-                    :paginator="meta"
+                    :paginator="display.attrs.meta"
                     @update:page="updatePage"
                     @update:per-page="updatePerPage"/>
         </template>
-        <template v-slot:default="{item, columns, isEven}">
-            <lv-table-row
-                    :actions="actions"
-                    :with-actions="withActions"
-                    :is-even="isEven"
-                    :item="item"
-                    :columns="columns"
-                    v-model="selected"/>
-        </template>
-    </lv-table>
+    </component>
+    <!--    <lv-table
+                v-model:selected="selected"
+                :with-actions="withActions"
+                :scope="activeScope"
+                :columns="fields"
+                :items="items">
+
+
+            <template v-slot:default="{item, columns, isEven}">
+
+            </template>
+        </lv-table>-->
 </div>
 @endverbatim

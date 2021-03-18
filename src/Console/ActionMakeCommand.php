@@ -4,21 +4,21 @@ namespace Codtail\AdminSuit\Console;
 
 use Illuminate\Console\GeneratorCommand;
 
-class FilterMakeCommand extends GeneratorCommand
+class ActionMakeCommand extends GeneratorCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'adsu-make:filter {name} {module}';
+    protected $signature = 'adsu-make:action {name} {module} {--T|type=default}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create Filter Class';
+    protected $description = 'Create Action Class';
 
 
     /**
@@ -26,7 +26,7 @@ class FilterMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $type = 'fillter';
+    protected $type = 'action';
 
      /**
      * Get the stub file for the generator.
@@ -35,7 +35,16 @@ class FilterMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/filter.php.stub';
+        $type = $this->option('type');
+
+        switch ($type) {
+            case "boolean":
+                return __DIR__ . '/stubs/BooleanAction.php.stub';
+                break;
+            default:
+                return __DIR__ . '/stubs/DefaultAction.php.stub';
+        }
+
     }
 
     /**
@@ -48,6 +57,6 @@ class FilterMakeCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         $module = $this->argument('module');
-        return $rootNamespace . "\AdminSuit\\$module\\Filters";
+        return $rootNamespace . "\AdminSuit\\$module\\Actions";
     }
 }

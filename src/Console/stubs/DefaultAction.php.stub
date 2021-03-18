@@ -1,0 +1,43 @@
+<?php
+
+
+namespace DummyNamespace;
+
+use Codtail\AdminSuit\Support\DefaultActionAbstract;
+use Illuminate\Database\Eloquent\Model;
+
+class DummyClass extends DefaultActionAbstract
+{
+    public $text = 'Do Action';
+
+    public function setAuthorization(): void
+    {
+        $this->authorization_callback = function (Model $model) {
+            return true;
+        };
+    }
+
+    public function setBulkAuthorization(): void
+    {
+        $this->bulk_authorization_callback = function () {
+            return true;
+        };
+    }
+
+    public function rules(): array
+    {
+        return [
+
+        ];
+    }
+
+    public function apply()
+    {
+
+    }
+
+    public function response()
+    {
+
+    }
+}

@@ -1,0 +1,54 @@
+<?php
+
+namespace DummyNamespace;
+
+use Codtail\AdminSuit\Support\BooleanActionAbstract;
+use Illuminate\Database\Eloquent\Model;
+
+class DummyClass extends BooleanActionAbstract
+{
+    public $truth = 'Truth';
+
+    public $falseness = 'Falseness';
+
+    public $text = 'Do Action';
+
+    public function setAuthorization(): void
+    {
+        $this->authorization_callback = function (Model $model) {
+            return true;
+        };
+    }
+
+    public function setBulkAuthorization(): void
+    {
+        $this->bulk_authorization_callback = function () {
+            return true;
+        };
+    }
+
+
+    public function rules(): array
+    {
+        return [
+
+        ];
+    }
+
+    public function apply()
+    {
+
+    }
+
+    public function response()
+    {
+
+    }
+
+    public function setStateCallback()
+    {
+        $this->state_callback = function (Model $model) {
+
+        };
+    }
+}

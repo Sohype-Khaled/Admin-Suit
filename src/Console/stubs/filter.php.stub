@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Codtail\AdminSuit\Support\Filters\FilterAbstract;
+use Codtail\AdminSuit\Support\FilterAbstract;
 
 class DummyClass extends FilterAbstract
 {

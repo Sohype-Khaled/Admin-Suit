@@ -1,0 +1,44 @@
+<?php
+
+namespace DummyNamespace;
+
+
+use Codtail\AdminSuit\Support\ListingViewAbstract;
+use {{ model }};
+
+class DummyClass extends ListingViewAbstract
+{
+    public $model = {{ modelVariable }}::class;
+
+    public $searchable = true;
+
+    public $withActions = true;
+
+    public function setFields()
+    {
+        return [
+
+        ];
+    }
+
+    public function setDisplays()
+    {
+        return [
+
+        ];
+    }
+
+    public function setScopes()
+    {
+        return [
+
+        ];
+    }
+
+    public function setActions()
+    {
+        return [
+
+        ];
+    }
+}

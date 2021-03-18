@@ -14,8 +14,6 @@ class ListingViewController extends Controller
     public function index(Request $request)
     {
 
-        $model = $request->input('model');
-
         $list_view = $request->input('class_name');
 
         $this->list_view = new $list_view();
@@ -23,9 +21,10 @@ class ListingViewController extends Controller
         if ($request->has('scope'))
             $this->list_view->setScope($request->input('scope'));
 
-        $per_page = $request->has('per_page') ? $request->input('per_page') : 10;
+//        dd($request->input('display_type'));
 
-        $query = $this->list_view->searchable ? $model : $model::query();
+
+        $query = $this->list_view->searchable ? $this->list_view->model : $this->list_view->model::query();
 
         $data = app(Pipeline::class)
             ->send($query)
@@ -34,19 +33,28 @@ class ListingViewController extends Controller
 
         $data = $data->with(($this->getRelationships()));
 
-        if ($this->list_view->pagination)
-            $data = $data->paginate($per_page)
-                ->fragment('per_page');
-        else
-            $data = $data->get();
-
+        $this->list_view->setDisplay($request->input('display_type'));
+        $display = $this->list_view->getDisplay()['attrs']->resolve($data);
 
         return response()->json([
-            'meta' => $this->getMeta($data->toArray()),
-            'items' => $data->items(),
-            'items_actions' => $this->getItemActions($data->items()),
-            'bulk_actions' => $this->getBulkActions($model)
+            'data' => $display->response(),
+            'items_actions' => $this->getItemActions($display->items),
+            'bulk_actions' => $this->getBulkActions($this->list_view->model)
         ]);
+//
+//        if ($this->list_view->pagination)
+//            $data = $data->paginate($per_page)
+//                ->fragment('per_page');
+//        else
+//            $data = $data->get();
+
+
+        /* return response()->json([
+             'meta' => $this->getMeta($data->toArray()),
+             'items' => $data->items(),
+             'items_actions' => $this->getItemActions($data->items()),
+             'bulk_actions' => $this->getBulkActions($model)
+         ]);*/
     }
 
     private function getRelationships()
@@ -58,19 +66,6 @@ class ListingViewController extends Controller
                 $relationships[] = $field->name;
 
         return $relationships;
-    }
-
-    private function getMeta($paginator)
-    {
-        return [
-            'current_page' => $paginator['current_page'],
-            'first_page' => 1,
-            'last_page' => $paginator['last_page'],
-            'from' => $paginator['from'],
-            'to' => $paginator['to'],
-            'total' => $paginator['total'],
-            'per_page' => $paginator['per_page']
-        ];
     }
 
     private function getItemActions($items)
@@ -96,5 +91,18 @@ class ListingViewController extends Controller
         }
 
         return $actions;
+    }
+
+    private function getMeta($paginator)
+    {
+        return [
+            'current_page' => $paginator['current_page'],
+            'first_page' => 1,
+            'last_page' => $paginator['last_page'],
+            'from' => $paginator['from'],
+            'to' => $paginator['to'],
+            'total' => $paginator['total'],
+            'per_page' => $paginator['per_page']
+        ];
     }
 }
