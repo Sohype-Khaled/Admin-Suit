@@ -2,15 +2,7 @@
 
 <div class="admin-suit-form-panel"
      id="{!! $id !!}"
-     data-data='{{ json_encode($fields) }}' @verbatim>
-
-    <component
-            :form="localForm"
-            v-model="localForm[input.attrs.name]"
-            v-bind="input.attrs"
-            :is="'v' + input.component"
-            :key="i"
-            v-for="(input, i)  in fields"/>
-
+     data-data="{{ json_encode($fields) }}"
+     data-errors="{{ $errors->toJson() }}">
 </div>
-@endverbatim
+

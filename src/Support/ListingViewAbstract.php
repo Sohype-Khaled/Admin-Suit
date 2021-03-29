@@ -8,13 +8,14 @@ use Codtail\AdminSuit\Support\Displays\TableDisplay;
 use Codtail\AdminSuit\Support\Filters\DynamicFilter;
 use Codtail\AdminSuit\Support\Filters\QFilter;
 use Codtail\AdminSuit\Support\Filters\RelationshipFilter;
+use Codtail\AdminSuit\Support\Scopes\DefaultScope;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class ListingViewAbstract
 {
     public $className;
 
-    public $model;
+    protected $model;
 
     public $searchable = false;
 
@@ -34,7 +35,7 @@ abstract class ListingViewAbstract
 
     public $default_display = 'TableDisplay';
 
-    public $visible_fields;
+    public $visible_fields = [];
     public $per_page = 10;
     public $per_page_options = [5, 10, 20, 50];
     protected $actions = [];
@@ -76,6 +77,9 @@ abstract class ListingViewAbstract
 
     public function getScopes()
     {
+        return  array_merge([
+            new DefaultScope()
+        ], $this->setScopes());
         return $this->setScopes();
     }
 
@@ -138,5 +142,10 @@ abstract class ListingViewAbstract
                 $actions[$action->text] = $action_data;
         }
         return collect($actions);
+    }
+
+    public function getModel()
+    {
+        return $this->model;
     }
 }

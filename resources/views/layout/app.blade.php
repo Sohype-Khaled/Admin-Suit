@@ -87,9 +87,16 @@
 
 <script src="{!! asset('admin-suit/admin-suit/js/actions.js') !!}"></script>
 
+<script src="{!! asset('admin-suit/admin-suit/js/nestedsetDisplay.js') !!}"></script>
+
 <script src="{!! asset('admin-suit/admin-suit/js/listing-view.js') !!}"></script>
 
+@stack('CustomDisplays')
+
 <script src="{!! asset('admin-suit/admin-suit/js/apps.js') !!}"></script>
+<script src="{!! asset('admin-suit/ad-su/app.js') !!}"></script>
+
+
 
 @stack('js')
 

@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 abstract class FilterAbstract
 {
 
+    public $name;
+
     public function handle($payload, Closure $next)
     {
         if (!request()->has($this->getFilterName()))
@@ -17,13 +19,12 @@ abstract class FilterAbstract
 
         $builder = $next($payload);
 
-        return  $this->apply($builder);
+        return $this->apply($builder);
     }
 
     public function getFilterName()
     {
-        return Str::snake(explode('Filter', class_basename($this))[0]);
-        return Str::snake(class_basename($this));
+        return Str::snake($this->name ?? explode('Filter', class_basename($this))[0]);
     }
 
     abstract protected function apply($builder);

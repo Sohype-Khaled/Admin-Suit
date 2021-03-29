@@ -1,0 +1,24 @@
+<template>
+  <v-input>
+    <textarea
+        :name="$attrs.name"
+        v-bind="$attrs"
+        class="form-control"
+        :placeholder="$attrs.placeholder"
+        :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)">
+      </textarea>
+  </v-input>
+</template>
+
+<script>
+export default {
+  name: "TextareaInput",
+  props: ['modelValue', 'form'],
+  emits: ['update:modelValue']
+}
+</script>
+
+<style scoped>
+
+</style>

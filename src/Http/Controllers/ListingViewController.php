@@ -24,7 +24,7 @@ class ListingViewController extends Controller
 //        dd($request->input('display_type'));
 
 
-        $query = $this->list_view->searchable ? $this->list_view->model : $this->list_view->model::query();
+        $query = $this->list_view->searchable ? $this->list_view->getModel() : $this->list_view->getModel()::query();
 
         $data = app(Pipeline::class)
             ->send($query)
@@ -39,7 +39,7 @@ class ListingViewController extends Controller
         return response()->json([
             'data' => $display->response(),
             'items_actions' => $this->getItemActions($display->items),
-            'bulk_actions' => $this->getBulkActions($this->list_view->model)
+            'bulk_actions' => $this->getBulkActions($this->list_view->getModel())
         ]);
 //
 //        if ($this->list_view->pagination)

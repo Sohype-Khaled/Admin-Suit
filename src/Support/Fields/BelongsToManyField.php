@@ -12,6 +12,8 @@ class BelongsToManyField extends FieldAbstract
 
     public $fields = [];
 
+    public $value = [];
+
     public function setOperators()
     {
         // TODO: Implement setOperators() method.

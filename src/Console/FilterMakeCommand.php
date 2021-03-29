@@ -11,7 +11,7 @@ class FilterMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'adsu-make:filter {name} {module}';
+    protected $signature = 'adsu-make:filter {name} {module} {--G|general}';
 
     /**
      * The console command description.
@@ -47,7 +47,11 @@ class FilterMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
+        $isGeneral = $this->option('general');
+
         $module = $this->argument('module');
+        if ($isGeneral)
+            return $rootNamespace . "\Filters\\$module";
         return $rootNamespace . "\AdminSuit\\$module\\Filters";
     }
 }
