@@ -4,11 +4,9 @@
 namespace Codtail\AdminSuit\Support\Fields;
 
 
-use Codtail\AdminSuit\Support\Operators\IsEqualToOperator;
+use Codtail\AdminSuit\Support\FieldAbstract;
 use Codtail\AdminSuit\Support\Operators\IsNotEqualToOperator;
 use Codtail\AdminSuit\Support\Operators\RelationFieldIsEqualToOperator;
-use Codtail\AdminSuit\Support\RelationshipFieldAbstract;
-use Codtail\AdminSuit\Support\FieldAbstract;
 
 class BelongsToField extends FieldAbstract
 {
@@ -23,11 +21,15 @@ class BelongsToField extends FieldAbstract
 
     public $foreignKey;
 
+    public $nameColumn;
+
     public $searchable = true;
 
     public $options = [];
 
     public $loadOptionsFrom;
+
+    public $relationshipField = true;
 
     public function setOperators()
     {
@@ -83,6 +85,12 @@ class BelongsToField extends FieldAbstract
     public function loadOptionsFrom($field)
     {
         $this->loadOptionsFrom = $field;
+        return $this;
+    }
+
+    public function nameColumn($name = 'name')
+    {
+        $this->nameColumn = $name;
         return $this;
     }
 }

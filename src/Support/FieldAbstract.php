@@ -30,6 +30,8 @@ abstract class FieldAbstract
     public $link;
 
     public $operators = [];
+    
+    public $relationshipField = false;
 
 
     public function __construct()

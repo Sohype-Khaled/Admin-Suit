@@ -8,7 +8,7 @@
           name="table_records">
     </td>
     <component
-        :field="column"
+        v-bind="{...column.attrs}"
         :item="item"
         :is="'v'+column['component']"
         :key="i"

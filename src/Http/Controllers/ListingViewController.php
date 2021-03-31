@@ -21,8 +21,6 @@ class ListingViewController extends Controller
         if ($request->has('scope'))
             $this->list_view->setScope($request->input('scope'));
 
-//        dd($request->input('display_type'));
-
 
         $query = $this->list_view->searchable ? $this->list_view->getModel() : $this->list_view->getModel()::query();
 
@@ -62,8 +60,8 @@ class ListingViewController extends Controller
         $relationships = [];
 
         foreach ($this->list_view->fields as $field)
-            if ($field instanceof RelationshipFieldAbstract)
-                $relationships[] = $field->name;
+            if ($field['attrs']->relationshipField)
+                $relationships[] = $field['attrs']->name;
 
         return $relationships;
     }

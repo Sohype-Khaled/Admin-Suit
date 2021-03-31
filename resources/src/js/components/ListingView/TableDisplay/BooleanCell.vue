@@ -1,6 +1,6 @@
 <template>
   <td class="text-center">
-    <i :class="[item[field.attrs.name]? 'glyphicon-ok': 'glyphicon-remove']" class="glyphicon"/>
+    <i :class="[item[$attrs.name]? 'glyphicon-ok': 'glyphicon-remove']" class="glyphicon"/>
   </td>
 </template>
 
@@ -9,7 +9,9 @@ import {fieldMixin} from "./mixins";
 
 export default {
   name: "BooleanCell",
-  props: ['field', 'item'],
+  inheritAttrs: false,
+
+  props: ['item'],
   mixins: [fieldMixin]
 }
 </script>

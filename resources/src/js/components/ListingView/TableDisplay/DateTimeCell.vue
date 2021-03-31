@@ -1,5 +1,5 @@
 <template>
-  <td v-if="field['withLink']">
+  <td v-if="$attrs['withLink']">
     <a :href="replace()" v-text="datetimeValue"/>
   </td>
   <td v-else v-text="datetimeValue"/>
@@ -15,9 +15,10 @@ export default {
   name: "DateTimeCell",
   props: ['field', 'item'],
   mixins: [fieldMixin],
-  setup({item, field}) {
-    const datetimeValue = computed(() => item[field.attrs.name] === null ? '______'
-        : moment(item[field.attrs.name]).format(field.attrs.format))
+  inheritAttrs: false,
+  setup({item}, {attrs}) {
+    const datetimeValue = computed(() => item[attrs.name] === null ? '______'
+        : moment(item[attrs.name]).format(attrs.format))
     return {
       datetimeValue
     }
