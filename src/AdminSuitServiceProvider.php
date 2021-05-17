@@ -2,7 +2,7 @@
 
 namespace Codtail\AdminSuit;
 
-use Codtail\AdminSuit\Console\ActionMakeCommand;
+use Codtail\AdminSuit\Console\FormMakeCommand;
 use Codtail\AdminSuit\Console\FilterMakeCommand;
 use Codtail\AdminSuit\Console\ListingViewMakeCommand;
 use Illuminate\Support\Facades\Blade;
@@ -21,7 +21,7 @@ class AdminSuitServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 FilterMakeCommand::class,
-                ActionMakeCommand::class,
+                FormMakeCommand::class,
                 ListingViewMakeCommand::class
             ]);
 

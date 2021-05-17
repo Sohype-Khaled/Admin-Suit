@@ -1,0 +1,16 @@
+<?php
+
+namespace DummyNamespace;
+
+use {{ model }};
+use Codtail\AdminSuit\Support\BaseForm;
+
+class DummyClass extends BaseForm
+{
+    public $model = {{ modelVariable }}::class;
+
+    public function setFields()
+    {
+        return [];
+    }
+}

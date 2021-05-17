@@ -54,6 +54,8 @@
         <!-- /page content -->
         <x-admin-suit::action-modal/>
         <!-- footer content -->
+
+        <div id="modal-area"></div>
     @yield('footer')
     <!-- /footer content -->
     </div>

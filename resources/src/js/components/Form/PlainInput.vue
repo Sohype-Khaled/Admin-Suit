@@ -12,7 +12,7 @@
 <script>
 export default {
   name: "PlainInput",
-  props: ['modelValue', 'form'],
+  props: ['modelValue'],
   emits: ['update:modelValue']
 }
 </script>

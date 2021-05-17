@@ -27,18 +27,20 @@
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
         type="text">
+    <input type="hidden" v-if="!editable"  :name="$attrs.name" :value="modelValue">
   </v-input>
 </template>
 
 <script>
-import {ref, computed} from 'vue'
+import {ref, computed, inject} from 'vue'
 
 export default {
   name: "SlugInput",
-  props: ['modelValue', 'form'],
+  props: ['modelValue'],
   emits: ['update:modelValue'],
-  setup({modelValue, form}, {emit, attrs}) {
-    const editable = ref(false),
+  setup({modelValue}, {emit, attrs}) {
+    const form = inject('form'),
+        editable = ref(false),
         targetValue = computed(() => attrs.target ? form[attrs.target] : ''),
         slugify = (text) => text.toString().toLowerCase()
             .replace(/\s+/g, '-')
@@ -48,9 +50,7 @@ export default {
             .replace(/-+$/, ''),
 
         slugifyTarget = (target) => emit('update:modelValue', slugify(targetValue)),
-        slugifyContent = (event) => {
-          emit('update:modelValue', slugify(modelValue))
-        }
+        slugifyContent = (event) => emit('update:modelValue', slugify(modelValue))
 
     return {
       editable,

@@ -14,7 +14,7 @@
 <script>
 export default {
   name: "TextareaInput",
-  props: ['modelValue', 'form'],
+  props: ['modelValue'],
   emits: ['update:modelValue']
 }
 </script>

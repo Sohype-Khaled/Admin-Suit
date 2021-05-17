@@ -4,6 +4,7 @@
             <div class="modal-header">
                 <h4 class="modal-title" id="admin-suit-action-modal_title"></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
             </div>
            
             <x-admin.form action="{{ route('admin-suit.call-action') }}" method="post">

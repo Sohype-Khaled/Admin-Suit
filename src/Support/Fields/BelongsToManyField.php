@@ -8,8 +8,6 @@ use Codtail\AdminSuit\Support\RelationshipFieldAbstract;
 
 class BelongsToManyField extends FieldAbstract
 {
-
-
     public $fields = [];
 
     public $value = [];
@@ -18,12 +16,6 @@ class BelongsToManyField extends FieldAbstract
     {
         // TODO: Implement setOperators() method.
     }
-
-    public function prepareFields()
-    {
-
-    }
-
 
     public function fields(\Closure $callback)
     {

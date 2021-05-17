@@ -6,7 +6,7 @@ import SlugInput from "./components/Form/SlugInput";
 import Multiselect from '@vueform/multiselect'
 import SelectInput from "./components/Form/SelectInput";
 import BelongsToInput from "./components/Form/BelongsToInput";
-import BelongsToManyInput from "./components/Form/BelongsToManyInput";
+import BelongsToManyInput from "./components/Form/BelongsToManyInput/BelongsToManyInput";
 
 export default function (app) {
 

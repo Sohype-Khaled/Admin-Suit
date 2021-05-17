@@ -24,7 +24,7 @@ for (let ListingView of document.getElementsByClassName('listing-view')) {
 
 for (let Form of document.getElementsByClassName('admin-suit-form-panel')) {
 	let app = createApp(FormPanel, {
-		form: JSON.parse(Form.getAttribute('data-data')),
+		data: JSON.parse(Form.getAttribute('data-data')),
 		errors: JSON.parse(Form.getAttribute('data-errors'))
 	})
 	registerComponents(app)

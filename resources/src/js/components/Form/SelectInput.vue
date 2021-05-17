@@ -12,7 +12,7 @@
 <script>
 export default {
   name: "SelectInput",
-  props: ['modelValue', 'form'],
+  props: ['modelValue'],
   emits: ['update:modelValue'],
   computed: {
     value: {

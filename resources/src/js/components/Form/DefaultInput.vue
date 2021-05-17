@@ -13,7 +13,7 @@
 <script>
 export default {
   name: "DefaultInput",
-  props: ['modelValue', 'form'],
+  props: ['modelValue'],
   emits: ['update:modelValue']
 }
 </script>

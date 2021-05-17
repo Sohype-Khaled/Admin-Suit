@@ -82,15 +82,15 @@ class BelongsToField extends FieldAbstract
         return $this;
     }
 
-    public function loadOptionsFrom($field)
-    {
-        $this->loadOptionsFrom = $field;
-        return $this;
-    }
-
     public function nameColumn($name = 'name')
     {
         $this->nameColumn = $name;
+        return $this;
+    }
+
+    public function loadOptionsFrom($field)
+    {
+        $this->loadOptionsFrom = $field;
         return $this;
     }
 }
