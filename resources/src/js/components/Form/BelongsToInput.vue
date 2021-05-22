@@ -2,6 +2,7 @@
   <v-input v-bind="$attrs">
     <input type="hidden" :name="$attrs.name" :value="modelValue">
     <Multiselect
+        :class="{'is-invalid': !!$attrs['error-messages']}"
         :searchable="searchable"
         :options="options"
         :placeholder="$attrs.placeholder"

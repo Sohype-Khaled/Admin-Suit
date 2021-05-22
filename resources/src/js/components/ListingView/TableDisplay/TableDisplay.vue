@@ -4,17 +4,23 @@
       <thead>
       <tr class="headings">
         <th v-if="withActions">
-          <input type="checkbox" id="check-all" class="mr-2">
-<!--          <v-field-activator :columns="availableFields" v-model="visible"/>-->
+          <input
+              @change="updateAllSelected"
+              v-model="isAllSelected"
+              type="checkbox"
+              class="mr-2">
+          <v-field-activator :columns="columns" v-model="visibleFields"/>
         </th>
         <th :colspan="fields.length" v-if="selected.length > 0">
-          <span style="font-weight: 500">Bulk Actions ( {{ selected.length }} Records Selected )</span>
+          <span style="font-weight: 500">
+            Bulk Actions ( {{ selected.length }} Records Selected )
+          </span>
         </th>
         <template v-else>
           <th :class="{'sortable': column.sortable, }"
               class="column-title"
               :key="i"
-              v-show="column.isVisible"
+              v-show="column.visible"
               v-for="(column, i) in visibleColumns"
               v-text="column['attrs']['label']"/>
           <th v-if="withActions">
@@ -52,7 +58,7 @@
 <script>
 import FieldActivator from "../FieldActivator"
 import TableRow from "./TableRow"
-import {computed, ref} from 'vue'
+import {computed, onMounted, ref, toRef, watch} from 'vue'
 
 
 export default {
@@ -66,41 +72,32 @@ export default {
     fields: Array,
     visibleFields: Array,
     selected: Array,
-    allSelected: {type: Boolean, default: false},
     withActions: {type: Boolean, default: false},
     actions: Object,
   },
-  setup({fields, visibleFields, selected, allSelected, withActions, actions}) {
-    const visible = ref([]),
-        availableFields = computed(() => fields.map(({attrs, component}) => ({
-          isVisible: visible.value.includes(attrs.name), component, attrs
+  setup(props, {emit, attrs}) {
+    const visibleFields = ref([]),
+        isAllSelected = ref(false),
+        selected = toRef(props, 'selected'),
+        fields = toRef(props, 'fields'),
+        columns = computed(() => fields.value.map(({attrs, component}) => ({
+          component, attrs, visible: visibleFields.value.includes(attrs.name)
         }))),
-        visibleColumns = computed(() => availableFields.value.filter(column => column.isVisible))
-    visible.value = [...visibleFields]
-    return {visible, availableFields, visibleColumns}
+        visibleColumns = computed(() => columns.value.filter(column => column.visible)),
+        updateAllSelected = () => (isAllSelected.value ? emit('update:selected', attrs.items.map(item => item.id)) : emit('update:selected', []))
+
+    watch(selected, (v) => {
+      let items = attrs.items.map(item => item.id).slice().sort(),
+          val = v.slice().sort()
+      isAllSelected.value = val.length === items.length && val.every((item, idx) => item === items[idx]);
+      emit('update:selected', v)
+    })
+
+    onMounted(() => {
+      visibleFields.value = [...props.visibleFields]
+    })
+    return {visibleColumns, columns, visibleFields, isAllSelected, updateAllSelected}
   }
-  /*data() {
-    return {visible: []}
-  },
-  computed: {
-    columns() {
-      return this.fields.map(({attrs, component}) => {
-        return {
-          isVisible: this.visible.includes(attrs.name),
-          component,
-          attrs
-        }
-      })
-    },
-    visibleColumns() {
-      return this.columns.filter(column => {
-        return column.isVisible
-      })
-    }
-  },
-  created() {
-    this.visible = [...this.visibleFields]
-  },*/
 }
 </script>
 

@@ -2,6 +2,7 @@
   <v-input>
     <input type="hidden" :name="$attrs.name" :value.sync="value">
     <Multiselect
+        :class="['form-control', {'is-invalid': !!$attrs['error-messages']}]"
         :searchable="searchable"
         :options="options"
         :placeholder="$attrs.placeholder"

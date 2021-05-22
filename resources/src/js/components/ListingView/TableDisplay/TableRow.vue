@@ -33,6 +33,7 @@ import BelongsToCell from "./BelongsToCell";
 import NumberCell from "./NumberCell";
 import BooleanCell from "./BooleanCell";
 import SingleItemActions from "../SingleItemActions";
+import {computed} from "vue";
 
 export default {
   name: "TableRow",
@@ -46,27 +47,22 @@ export default {
   },
   components: {
     vTextField: TextCell,
+    vSelectField: TextCell,
     vDateTimeField: DateTimeCell,
     vBelongsToField: BelongsToCell,
     vNumberField: NumberCell,
     vBooleanField: BooleanCell,
     vItemAction: SingleItemActions
   },
-  computed: {
-    isSelected() {
-      return this.modelValue.includes(this.item.id)
-    },
-    localValue: {
-      get() {
-        return this.modelValue
-      },
-      set(value) {
-        this.$emit('update:modelValue', value)
-      }
-    }
-  },
-  mounted() {
-    console.log('sadlkasbnf')
+  emits: ['update:modelValue'],
+  setup(props, {emit}) {
+    const isSelected = computed(() => props.modelValue.includes(props.item.id)),
+        localValue = computed({
+          get: () => props.modelValue,
+          set: v => emit('update:modelValue', v)
+        })
+
+    return {isSelected,localValue}
   }
 }
 </script>

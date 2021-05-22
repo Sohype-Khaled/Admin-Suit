@@ -1,5 +1,5 @@
 <template>
-  <div class="btn-group">
+  <div class="btn-group" v-if="displays.length > 1">
     <button
         :key="i"
         v-for="(display_view, i) in displays"

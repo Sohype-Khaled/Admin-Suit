@@ -10,13 +10,15 @@
           v-for="(column, i) in columns">
         <div class="form-check form-check-inline mb-1">
           <input
-              :disabled="localValue.length <= 2"
               class="form-check-input"
               type="checkbox"
               :id="column.attrs['name']"
               :value="column.attrs['name']"
-              v-model="localValue">
-          <label class="form-check-label" :for="column.attrs['name']">{{ column.attrs['label'] }}</label>
+              v-model="visible">
+          <label
+              class="form-check-label"
+              :for="column.attrs['name']"
+              v-text="column.attrs['label']"/>
         </div>
       </div>
     </div>
@@ -24,23 +26,33 @@
 </template>
 
 <script>
+import {computed} from "vue"
+
 export default {
   name: "FieldActivator",
+  inheritAttrs: false,
   props: {
     columns: Array,
     modelValue: Array
   },
   emits: ['update:modelValue'],
-  computed: {
-    localValue: {
-      get() {
-        return this.modelValue
-      },
-      set(value) {
-        this.$emit('update:modelValue', value)
-      }
-    }
+  setup(props, {emit}) {
+    const visible = computed({
+      get: () => props.modelValue,
+      set: v => emit('update:modelValue', v)
+    })
+    return {visible}
   }
+  /* computed: {
+     localValue: {
+       get() {
+         return this.modelValue
+       },
+       set(value) {
+         this.$emit('update:modelValue', value)
+       }
+     }
+   }*/
 }
 </script>
 

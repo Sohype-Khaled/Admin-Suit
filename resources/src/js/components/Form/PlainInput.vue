@@ -4,6 +4,7 @@
         :name="$attrs.name"
         :type="$attrs.type"
         :placeholder="$attrs.placeholder"
+        :class="{'is-invalid': !!$attrs['error-messages']}"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)">
   </v-input>

@@ -3,7 +3,7 @@
     <textarea
         :name="$attrs.name"
         v-bind="$attrs"
-        class="form-control"
+        :class="['form-control', {'is-invalid': !!$attrs['error-messages']}]"
         :placeholder="$attrs.placeholder"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)">

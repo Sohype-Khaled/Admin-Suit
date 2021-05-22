@@ -29,29 +29,29 @@
 </template>
 
 <script>
+import {computed} from "vue";
+
 export default {
   name: "BulkActions",
   props: {
-    allSelected: {type: Boolean, default: false},
     actions: Object,
     selected: Array
   },
-  computed: {
-    selectedValue() {
-      return this.selected.join(',')
-    },
-    localActions() {
-      var actions = []
-      for (var action of this.actions) {
-        if (Array.isArray(action))
-          for (var state of action)
-            actions.push(state)
-        else
-          actions.push(action)
-      }
-      return actions
-    }
-  },
+  setup(props) {
+    const selectedValue = computed(() => props.selected.join(',')),
+        localActions = computed(() => {
+          var actions = []
+          for (var action of props.actions) {
+            if (Array.isArray(action))
+              for (var state of action)
+                actions.push(state)
+            else
+              actions.push(action)
+          }
+          return actions
+        })
+    return {selectedValue, localActions}
+  }
 }
 </script>
 

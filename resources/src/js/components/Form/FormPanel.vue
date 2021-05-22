@@ -5,7 +5,7 @@
       :is="'v' + input.component"
       :key="i"
       v-for="(input, i)  in fields"/>
-  <pre>{{ form }}</pre>
+<!--  <pre>{{ form }}</pre>-->
 </template>
 
 <script>
