@@ -57,6 +57,7 @@ import Pagination from "./Pagination"
 import DisplaySwitch from "./DisplaySwitch"
 import TableDisplay from "./TableDisplay/TableDisplay"
 import {onMounted, reactive, ref, toRef, watch} from 'vue'
+import NestedSetDisplay from "./NestedSetDisplay/NestedSetDisplay";
 
 export default {
   name: "ListingViewApp",
@@ -66,7 +67,8 @@ export default {
     VSearch: Search,
     VPagination: Pagination,
     VDisplaySwitch: DisplaySwitch,
-    VTableDisplay: TableDisplay
+    VTableDisplay: TableDisplay,
+    VNestedSetDisplay: NestedSetDisplay
   },
   props: ['initialData'],
   setup(props) {
@@ -128,7 +130,7 @@ export default {
       // console.log('fields', fields.value)
       // console.log('scopes', scopes.value)
       console.log('display', display.value)
-      // console.log('displays', displays.value)
+      console.log('displays', displays.value)
       // console.log('visibleFields', visibleFields.value)
       // console.log('withActions', withActions.value)
     })
