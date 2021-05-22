@@ -48,6 +48,7 @@ export default {
   components: {
     vTextField: TextCell,
     vSelectField: TextCell,
+    vSlugField: TextCell,
     vDateTimeField: DateTimeCell,
     vBelongsToField: BelongsToCell,
     vNumberField: NumberCell,

@@ -19,10 +19,6 @@
         :selected.sync="selected">
     </v-actions>
     <!--
-
-
-
-
         <v-search
             :scope="activeScope"
             v-model:filters="filters"
@@ -58,6 +54,7 @@ import DisplaySwitch from "./DisplaySwitch"
 import TableDisplay from "./TableDisplay/TableDisplay"
 import {onMounted, reactive, ref, toRef, watch} from 'vue'
 import NestedSetDisplay from "./NestedSetDisplay/NestedSetDisplay";
+import GridDisplay from "./GridDisplay/GridDisplay";
 
 export default {
   name: "ListingViewApp",
@@ -68,7 +65,8 @@ export default {
     VPagination: Pagination,
     VDisplaySwitch: DisplaySwitch,
     VTableDisplay: TableDisplay,
-    VNestedSetDisplay: NestedSetDisplay
+    VNestedSetDisplay: NestedSetDisplay,
+    VGridDisplay: GridDisplay
   },
   props: ['initialData'],
   setup(props) {
@@ -113,6 +111,8 @@ export default {
             }
           } = await $axios.get('/admin-suit/listing-view', {params: query()})
 
+          console.log('data', data)
+
           for (let key in data)
             if (data.hasOwnProperty(key))
               display.value['attrs'][key] = data[key]
@@ -127,12 +127,13 @@ export default {
       display.value = props.initialData['display'] ? props.initialData['display'] : props.initialData['displays'][0]
 
       fetch()
-      // console.log('fields', fields.value)
-      // console.log('scopes', scopes.value)
+
+      console.log('fields', fields.value)
+      console.log('scopes', scopes.value)
       console.log('display', display.value)
       console.log('displays', displays.value)
-      // console.log('visibleFields', visibleFields.value)
-      // console.log('withActions', withActions.value)
+      console.log('visibleFields', visibleFields.value)
+      console.log('withActions', withActions.value)
     })
 
     watch(filters, () => fetch(), {deep: true})
