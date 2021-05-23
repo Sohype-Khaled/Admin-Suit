@@ -2,6 +2,7 @@
   image
   fields
   actions
+  test
 </template>
 
 <script>
