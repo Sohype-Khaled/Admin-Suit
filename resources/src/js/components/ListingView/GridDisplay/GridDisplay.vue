@@ -1,53 +1,79 @@
 <template>
-  image
-  fields
-  actions
   <div class="container">
     <div class="row">
-      <div class="col-lg-3">
-        <div class="card mb-2">
+      <div class="col-lg-12">
+        <div class="mx-2 d-flex align-items-center">
+          <div class="d-flex justify-content-between align-items-center mr-2" style="width: 30px">
+            <input
+                @change="updateAllSelected"
+                v-model="isAllSelected"
+                type="checkbox"
+                class="mr-2">
+            <v-field-activator :columns="columns" v-model="visibleFields"/>
+          </div>
+          <p
+            v-for="(column, i) in visibleColumns"
+            :key="i"
+            v-text="column['attrs']['label']"
+            class="mx-2 mb-0"
+          />
+        </div>
+      </div>
+      <template v-if=" $attrs.items.length > 0">
+        <div class="col-lg-4" v-for="(item, i) in $attrs.items" :key="i">
+        <div class="card mb-2" style="height: calc(100% - 20px);">
           <div class="card-image">
             <img src="/assets/images/explore/1.jpg" class="" alt="...">
           </div>
           <div class="card-body">
             <div class="d-flex justify-content-between card__title">
-              <h4 class="text-secondary text-bold">product name</h4>
-              <div class="dropdown">
-                <button class="btn dropdown-toggle p-0 grid-item__btn-action" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-ellipsis-h"></i>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </div>
+              <h5 class="text-secondary text-bold">{{item.name}}</h5>
             </div>
-            <li class="d-flex align-items-start">
-              <h6 class="fw-bold">Field name :</h6>
-              <span class="px-2" >value</span>
-            </li>
-            <li class="d-flex align-items-start">
-              <h6 class="fw-bold">Field name :</h6>
-              <span class="px-2" >value</span>
-            </li>
-            <li class="d-flex align-items-start">
-              <h6 class="fw-bold">Field name :</h6>
-              <span class="px-2" >value</span>
-            </li>
+            <ul class="pl-0" style="min-width: 154px;">
+              <li
+                  class="d-flex align-items-start flex-wrap"
+                  v-for="(field, i) in visibleFields"
+                  :key="i"
+              >
+                <h6 class="fw-bold mr-1">{{ field }} :</h6>
+                <span class="" >{{ item[field]}}</span>
+              </li>
+            </ul>
+            <div class="last mt-auto" v-if="withActions">
+              <v-item-action :actions="actions[item['id']]">
+                <template v-slot:activator>
+                  <a class="btn btn-secondary" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                   Actions <i class="fa fa-chevron-down"></i>
+                  </a>
+                </template>
+              </v-item-action>
+            </div>
           </div>
         </div>
       </div>
+      </template>
+      <div v-else>
+        there is no items
+      </div>
     </div>
   </div>
+<!--  {{visibleFields}}-->
+<!--  {{visibleColumns}}-->
+<!--  <div v-for=""></div>-->
 </template>
 
 <script>
+import FieldActivator from "../FieldActivator"
 import {computed, onMounted, ref, toRef, watch} from "vue";
+import SingleItemActions from "../SingleItemActions";
 
 export default {
   name: "GridDisplay",
   inheritAttrs: false,
+  components: {
+    vFieldActivator: FieldActivator,
+    vItemAction: SingleItemActions
+  },
   props: {
     fields: Array,
     visibleFields: Array,
@@ -83,9 +109,13 @@ export default {
 
 <style scoped>
 .card__title{
-  //border-bottom: rgba(#ccc, 0.4);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
   margin-bottom: 10px;
+}
+.card__title h5{
+  height: calc(1.25rem * 1.2 * 2);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .card-image {
   height: 250px;
