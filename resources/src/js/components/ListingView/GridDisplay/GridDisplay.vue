@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div class="mx-2 d-flex align-items-center">
+        <div class="my-2 d-flex align-items-center">
           <div class="d-flex justify-content-between align-items-center mr-2" style="width: 30px">
             <input
                 @change="updateAllSelected"
@@ -21,7 +21,7 @@
       </div>
       <template v-if=" $attrs.items.length > 0">
         <div class="col-lg-4" v-for="(item, i) in $attrs.items" :key="i">
-        <div class="card mb-2" style="height: calc(100% - 20px);">
+        <div class="card mb-2" >
           <div class="card-image">
             <img src="/assets/images/explore/1.jpg" class="" alt="...">
           </div>
@@ -108,6 +108,10 @@ export default {
 </script>
 
 <style scoped>
+.card{
+  height: calc(100% - 20px);
+  position: relative;
+}
 .card__title{
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
   margin-bottom: 10px;
@@ -118,7 +122,8 @@ export default {
   text-overflow: ellipsis;
 }
 .card-image {
-  height: 250px;
+  min-height: 250px;
+  max-height: 250px;
   overflow: hidden;
 }
 .card-image img{
@@ -127,7 +132,13 @@ export default {
   object-fit: cover;
 }
 
-.grid-item__btn-action::after{
-  display: none;
+.card-body{
+  padding-bottom: 50px;
+}
+
+.last{
+  position: absolute;
+  left: 20px;
+  bottom: 10px;
 }
 </style>
