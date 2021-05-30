@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div class="my-2 d-flex align-items-center">
+        <div class="mt-2 mb-3 d-flex align-items-center">
           <div class="d-flex justify-content-between align-items-center mr-2" style="width: 30px">
             <input
                 @change="updateAllSelected"
@@ -11,11 +11,14 @@
                 class="mr-2">
             <v-field-activator :columns="columns" v-model="visibleFields"/>
           </div>
+          <div class="mx-2 detail-item" style="cursor: pointer">
+            <i class="fa fa-sort-alpha-asc"></i>
+          </div>
           <p
             v-for="(column, i) in visibleColumns"
             :key="i"
             v-text="column['attrs']['label']"
-            class="mx-2 mb-0"
+            class="mx-2 mb-0 detail-item"
           />
         </div>
       </div>
@@ -57,9 +60,6 @@
       </div>
     </div>
   </div>
-<!--  {{visibleFields}}-->
-<!--  {{visibleColumns}}-->
-<!--  <div v-for=""></div>-->
 </template>
 
 <script>
@@ -140,5 +140,11 @@ export default {
   position: absolute;
   left: 20px;
   bottom: 10px;
+}
+.detail-item{
+  background-color: #18A2B8;
+  padding: 8px 16px;
+  border-radius: 5px;
+  color: #fff;
 }
 </style>

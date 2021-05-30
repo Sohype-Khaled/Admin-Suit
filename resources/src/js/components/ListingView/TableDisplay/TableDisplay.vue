@@ -3,13 +3,14 @@
     <table class="table table-striped jambo_table bulk_action">
       <thead>
       <tr class="headings">
-        <th v-if="withActions">
+        <th v-if="withActions" class="d-flex justify-content-between align-items-center">
           <input
               @change="updateAllSelected"
               v-model="isAllSelected"
               type="checkbox"
               class="mr-2">
           <v-field-activator :columns="columns" v-model="visibleFields"/>
+          <div class="ml-3"><i class="fa fa-sort-alpha-asc"></i></div>
         </th>
         <th :colspan="fields.length" v-if="selected.length > 0">
           <span style="font-weight: 500">
