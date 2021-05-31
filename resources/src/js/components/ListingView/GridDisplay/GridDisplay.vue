@@ -23,36 +23,12 @@
         </div>
       </div>
       <template v-if=" $attrs.items.length > 0">
-        <div class="col-lg-4" v-for="(item, i) in $attrs.items" :key="i">
-        <div class="card mb-2" >
-          <div class="card-image">
-            <img src="/assets/images/explore/1.jpg" class="" alt="...">
-          </div>
-          <div class="card-body">
-            <div class="d-flex justify-content-between card__title">
-              <h5 class="text-secondary text-bold">{{item.name}}</h5>
-            </div>
-            <ul class="pl-0" style="min-width: 154px;">
-              <li
-                  class="d-flex align-items-start flex-wrap"
-                  v-for="(field, i) in visibleFields"
-                  :key="i"
-              >
-                <h6 class="fw-bold mr-1">{{ field }} :</h6>
-                <span class="" >{{ item[field]}}</span>
-              </li>
-            </ul>
-            <div class="last mt-auto" v-if="withActions">
-              <v-item-action :actions="actions[item['id']]">
-                <template v-slot:activator>
-                  <a class="btn btn-secondary" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                   Actions <i class="fa fa-chevron-down"></i>
-                  </a>
-                </template>
-              </v-item-action>
-            </div>
-          </div>
-        </div>
+        <div class="col-lg-3" v-for="(item, i) in $attrs.items" :key="i">
+          <v-grid-item
+              :item="item"
+              :actions="actions"
+              :with-actions="withActions"
+              :visible-fields="visibleFields"/>
       </div>
       </template>
       <div v-else>
@@ -66,13 +42,15 @@
 import FieldActivator from "../FieldActivator"
 import {computed, onMounted, ref, toRef, watch} from "vue";
 import SingleItemActions from "../SingleItemActions";
+import GridItem from "./GridItem";
 
 export default {
   name: "GridDisplay",
   inheritAttrs: false,
   components: {
     vFieldActivator: FieldActivator,
-    vItemAction: SingleItemActions
+    vItemAction: SingleItemActions,
+    vGridItem: GridItem
   },
   props: {
     fields: Array,
@@ -108,40 +86,7 @@ export default {
 </script>
 
 <style scoped>
-.card{
-  height: calc(100% - 20px);
-  position: relative;
-}
-.card__title{
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-  margin-bottom: 10px;
-}
-.card__title h5{
-  height: calc(1.25rem * 1.2 * 2);
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.card-image {
-  min-height: 250px;
-  max-height: 250px;
-  overflow: hidden;
-}
-.card-image img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.card-body{
-  padding-bottom: 50px;
-}
-
-.last{
-  position: absolute;
-  left: 20px;
-  bottom: 10px;
-}
-.detail-item{
+  .detail-item{
   background-color: #18A2B8;
   padding: 8px 16px;
   border-radius: 5px;

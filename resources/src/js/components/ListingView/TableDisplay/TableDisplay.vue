@@ -10,7 +10,6 @@
               type="checkbox"
               class="mr-2">
           <v-field-activator :columns="columns" v-model="visibleFields"/>
-          <div class="ml-3"><i class="fa fa-sort-alpha-asc"></i></div>
         </th>
         <th :colspan="fields.length" v-if="selected.length > 0">
           <span style="font-weight: 500">
@@ -18,12 +17,16 @@
           </span>
         </th>
         <template v-else>
-          <th :class="{'sortable': column.sortable, }"
+          <th :class="{'sortable': column.sortable }"
               class="column-title"
               :key="i"
               v-show="column.visible"
-              v-for="(column, i) in visibleColumns"
-              v-text="column['attrs']['label']"/>
+              v-for="(column, i) in visibleColumns">
+            <p class="mb-0 d-flex align-items-center justify-content-between">
+              {{column['attrs']['label']}}
+              <i class="fa fa-sort-alpha-asc"></i>
+            </p>
+          </th>
           <th v-if="withActions">
             Actions
           </th>
