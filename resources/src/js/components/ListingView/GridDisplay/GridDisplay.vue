@@ -11,30 +11,37 @@
                 class="mr-2">
             <v-field-activator :columns="columns" v-model="visibleFields"/>
           </div>
-          <div class="mx-2 detail-item" style="cursor: pointer">
-            <i class="fa fa-sort-alpha-asc"></i>
-          </div>
-          <p
+          <div
             v-for="(column, i) in visibleColumns"
             :key="i"
-            v-text="column['attrs']['label']"
-            class="mx-2 mb-0 detail-item"
-          />
+            class="mx-2 mb-0 detail-item d-flex align-items-center"
+          >
+            <p class="mb-0"
+                v-text="column['attrs']['label']"></p>
+            <div class="ml-3" style="cursor: pointer">
+              <i class="fa fa-sort-alpha-asc"></i>
+            </div>
+          </div>
         </div>
       </div>
       <template v-if=" $attrs.items.length > 0">
-        <div class="col-lg-3" v-for="(item, i) in $attrs.items" :key="i">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" v-for="(item, i) in $attrs.items" :key="i">
           <v-grid-item
               :item="item"
               :actions="actions"
               :with-actions="withActions"
-              :visible-fields="visibleFields"/>
+              :visible-fields="visibleFields"
+              v-model="selected"
+          />
       </div>
       </template>
       <div v-else>
         there is no items
       </div>
     </div>
+  </div>
+  <div class="mb-3">
+    <slot name="pagination"/>
   </div>
 </template>
 
