@@ -10,10 +10,10 @@ mix.webpackConfig({
 	]
 });
 
-// mix.js('resources/src/js/app.js', 'resources/assets/admin-suit')
-// 	.vue()
-// 	.setPublicPath('resources/assets/admin-suit');
-
-mix.js('resources/src/js/app.js', '../../MOS/Backend/public/admin-suit/ad-su')
-	.vue({version: 3})
-	.setPublicPath('../../MOS/Backend/public/admin-suit/ad-su');
+mix.js('resources/src/js/app.js', 'resources/assets/admin-suit')
+	.vue()
+	.setPublicPath('resources/assets/admin-suit');
+//
+// mix.js('resources/src/js/app.js', '../../MOS/Backend/public/admin-suit/ad-su')
+// 	.vue({version: 3})
+// 	.setPublicPath('../../MOS/Backend/public/admin-suit/ad-su');
